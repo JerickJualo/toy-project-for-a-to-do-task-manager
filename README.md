@@ -35,16 +35,8 @@ source venv/bin/activate
 
 pip install -r requirements.txt 
 
---- 
+---
 
-
-# Progress Log
-2025-05-31
-Added src/main_module.py with a simple Hello, world! function.
-
-Wrote this README.md with project overview and installation instructions.
-
-Committed and pushed first changes.
 
 
 
