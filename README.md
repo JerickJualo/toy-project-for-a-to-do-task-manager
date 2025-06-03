@@ -14,9 +14,7 @@ A small Python playground where I practice basics and build up features incremen
 
 ## Overview
 
-This project started as a “Hello, world!” script and will grow into a collection of small utilities. For now, it includes:
-- `src/main_module.py` – prints “Hello, world!”
-- (Later: features for To-Do Task Manager, etc.)
+This project started as basic structural script and will grow into a collection of small utilities.
 
 ---
 
