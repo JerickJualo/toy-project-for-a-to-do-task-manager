@@ -43,6 +43,14 @@ if weekly_schedule == "yes":
          
  # i change the rotation of tasks from monday to saturday and only sunday is the toy project in python
  # as i now relized that i need to rest and only do the toy projects in python on sunday
+
+month = input("What Month is Today?: ").strip().lower()
+day = input("What Day is Today?: ").strip().lower()
+week_day = input("What Day of the Week is Today?: ").strip().upper()
+print("\n=======================================================================================================================================================")
+print(f"Today's Date: {month} {day}, 2025 and it is a {week_day}")
+print("=======================================================================================================================================================\n")
+
  
 
 task_learn_python = "Do the Toy Projects in Python in Morning and Afternoon"
@@ -50,21 +58,6 @@ task_project_python = "Study/Code in Python or Do Problem Solving in Python Prob
 task_math = "Study Math (Getting Ready for Algebra Course in Khan Academy)"
 task_sql = "Study SQL/PostgreSQL and Do Problem Solving in SQL Problems provided by ChatGPT"
 
-print("==========================")
-print("\nToday's Task Finder")
-print("==========================")
-print("What Month is Today?")
-print("- May")
-print("What Day is Today?")
-print("- 31\n")
-print("The date is May 31, 2025 is Saturday")
-print("======Today's Tasks ======")
-
-print(f"""
- Do the Saturday Tasks:
- 1. {task_project_python}  
- 2. {task_sql}             
-     """)
      
 # use the function f-string and variable task_project_python to get its string value
 # use the function f-string and variable task_sql to get its string value
