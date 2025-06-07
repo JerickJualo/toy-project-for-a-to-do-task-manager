@@ -1,4 +1,19 @@
-print("My Simple To-Do Task Manager")
+print("""welcome to my To-Do List Manager
+      
+Coded by: Jerick C. Jualo""")
+
+username = input("\nEnter your username: ")
+password = input("Enter your password: ")
+
+if username.lower() in "jerick":
+    if password.lower() in "jualo":
+        print(f"\nWelcome back, {username}!")
+
+else:
+    print("Exiting the program. Please run again with the correct username.")
+    exit()
+
+    
 print("==========================")
 print("Heres my Everday Tasks for this Summer Vacation")
 print("==========================")
@@ -11,28 +26,27 @@ print("==========================")
 print("Starting June 1, 2025, Here's the Main Task that i will do Everday:")
 print("""
 Sunday - Do the Toy Projects in Python
-       - Study Math(Getting Ready for Algebra Course in Khan Academy)
        
 Monday - Study/Code in Python or Do Problem Solving in Python Problems provided by ChatGPT or HackerRank, LeetCode, Codewars
-       - Study SQL/PostgreSQL and Do Problem Solving in SQL Problems provided by ChatGPT
+       - Study Math(Getting Ready for Algebra Course in Khan Academy)
        
 Tuesday - Study/Code in Python or Do Problem Solving in Python Problems provided by ChatGPT or HackerRank, LeetCode, Codewars
-        - Study Math(Getting Ready for Algebra Course in Khan Academy)
+        - Study SQL/PostgreSQL and Do Problem Solving in SQL Problems provided by ChatGPT
 
 Wednesday - Study/Code in Python or Do Problem Solving in Python Problems provided by ChatGPT or HackerRank, LeetCode, Codewars
-          - Study SQL/PostgreSQL and Do Problem Solving in SQL Problems provided by ChatGPT
+          - Study Math(Getting Ready for Algebra Course in Khan Academy)
       
 Thursday - Study/Code in Python or Do Problem Solving in Python Problems provided by ChatGPT or HackerRank, LeetCode, Codewars
-         - Study Math(Getting Ready for Algebra Course in Khan Academy)
+         - Study SQL/PostgreSQL and Do Problem Solving in SQL Problems provided by ChatGPT
 
 Friday - Study/Code in Python or Do Problem Solving in Python Problems provided by ChatGPT or HackerRank, LeetCode, Codewars
-       - Study SQL/PostgreSQL and Do Problem Solving in SQL Problems provided by ChatGPT
+       - Study Math(Getting Ready for Algebra Course in Khan Academy)
 
 Saturday - Do the Toy Projects in Python 
-         - Study Math (Getting Ready for Algebra Course in Khan Academy)""")
+         - Study SQL/PostgreSQL and Do Problem Solving in SQL Problems provided by ChatGPT""")
          
- # the rotation of SQL and Math every otherday should be fix as 7 days is a Odd Number 
- # Today, Saturday (5-31-25) it should be Study SQL and in the next Sunday it should be SQL not Math again
+ # i change the rotation of tasks from monday to saturday and only sunday is the toy project in python
+ # as i now relized that i need to rest and only do the toy projects in python on sunday
  
 
 task_learn_python = "Do the Toy Projects in Python in Morning and Afternoon"
