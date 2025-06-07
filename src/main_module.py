@@ -51,12 +51,32 @@ print("\n=======================================================================
 print(f"Today's Date: {month} {day}, 2025 and it is a {week_day}")
 print("=======================================================================================================================================================\n")
 
- 
-
 task_learn_python = "Do the Toy Projects in Python in Morning and Afternoon"
 task_project_python = "Study/Code in Python or Do Problem Solving in Python Problems provided by ChatGPT or HackerRank, LeetCode, Codewars"
 task_math = "Study Math (Getting Ready for Algebra Course in Khan Academy)"
 task_sql = "Study SQL/PostgreSQL and Do Problem Solving in SQL Problems provided by ChatGPT"
+
+if week_day == "SUNDAY":
+    print(f"""\nToday's Task: 1. {task_learn_python}
+               2. Rest and Relax""")
+elif week_day == "MONDAY":
+       print(f"""\nToday's Task: 1. {task_learn_python}
+               2. {task_math}""")
+elif week_day == "TUESDAY":
+       print(f"""\nToday's Task: 1. {task_learn_python}
+              2. {task_sql}""")
+elif week_day == "WEDNESDAY":
+       print(f"""\nToday's Task: 1. {task_learn_python}
+              2. {task_math}""")
+elif week_day == "THURSDAY":
+       print(f"""\nToday's Task: 1. {task_learn_python}
+              2. {task_sql}""")
+elif week_day == "FRIDAY":
+       print(f"""\nToday's Task: 1. {task_learn_python}
+              2. {task_math}""")
+elif week_day == "SATURDAY":
+       print(f"""\nToday's Task: 1. {task_learn_python}
+              2. {task_sql}""")
 
      
 # use the function f-string and variable task_project_python to get its string value
