@@ -1,6 +1,7 @@
 from classes_functs import log_in
 from classes_functs import account
 
+# Introduction
 
 print("""welcome to my To-Do List Manager
       
@@ -14,21 +15,15 @@ print("Also, it will help you create your tasks for today and check the status o
 print("Please log in to continue.")
 print("=======================================================================================================================================================\n")
 
-log_in()
 
-username = input("\nEnter your username: ")
-password = input("Enter your password: ")
+# Ensure the user is logged in before proceeding 
+while not log_in():
+        pass
+    
 
-if username.lower() in "jerick":
-    if password.lower() in "jualo":
-        print(f"\nWelcome back, {username}!")
-
-else:
-    print("Exiting the program. Please run again with the correct username.")
-    exit()
     
 print("\n=======================================================================================================================================================")
-print(f"Here's {username}'s Goals for this Summer Vacation")
+print(f"Here's Jerick's Goals for this Summer Vacation")
 print("=======================================================================================================================================================")
 print("Goals:")
 print("1. Solidify Python skills from Basic to Data Collections to Functions to File and Error Handling to OOP")
