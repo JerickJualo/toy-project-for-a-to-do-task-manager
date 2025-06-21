@@ -19,6 +19,14 @@ class account:
     
 
 def log_in():
+
+    """
+    1. Prompt for username/password
+    2. Check against account.details_account
+    3. On success: greet & return True
+    4. On failure: call create_account() or exit
+    """
+    
     print("=======================================================================================================================================================")
     print("Log In:")
     username: str = input("\nEnter your username: ").lower()
@@ -42,6 +50,13 @@ def log_in():
 
 
 def create_account():
+
+    """
+    1. Loop until unique username + matching passwords
+    2. Instantiate new account(...)
+    3. Confirm creation, return to login flow
+    """
+
     while True:
         
         print("Creating Account:")
