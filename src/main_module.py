@@ -1,6 +1,20 @@
+from classes_functs import log_in
+from classes_functs import account
+
+
 print("""welcome to my To-Do List Manager
       
 Coded by: Jerick C. Jualo""")
+
+print("\n=======================================================================================================================================================")
+print("Welcome to the To-Do Task Manager!")
+print("=======================================================================================================================================================")
+print("This program will help you track your goals and weekly schedule for Python, SQL Learning, and Math Study.")
+print("Also, it will help you create your tasks for today and check the status of your tasks.")
+print("Please log in to continue.")
+print("=======================================================================================================================================================\n")
+
+log_in()
 
 username = input("\nEnter your username: ")
 password = input("Enter your password: ")
