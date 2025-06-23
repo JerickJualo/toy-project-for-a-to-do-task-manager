@@ -15,6 +15,56 @@ class Task:
         self.day_created = None
 
 
+def set_due_date(self):
+        month_list = {"1": "January", "2": "February", "3": "March", "4": "April", "5":"May", "6": "June",
+                          "7": "July", "8": "August", "9": "September", "10": "October", "11": "November", "12": "December"}
+        
+        month_day_limit = {"January": 31, "February": 28, "March": 31, "April": 30, "May": 31, "June": 30,
+                           "July": 31, "August": 31, "September": 30, "October": 31, "November": 30, "December": 31}
+        
+        print(f"Set the Due date of the task {self.task_name}: ")
+        year = input("Enter the Year(eg. 2025): ").strip()
+
+        while True:
+            month_choice = input("""Enter the Month:
+                        January - 1
+                        February - 2
+                        March   - 3
+                        April   - 4
+                        May     - 5
+                        June    - 6
+                        July    - 7
+                        August  - 8
+                        September - 9
+                        October   - 10
+                        November  - 11
+                        December  - 12
+                        : """).strip()
+            
+            
+            
+            if month_choice not in month_list:
+                print("Invalid Month Choice, Please try again. ")
+                continue
+            
+            month = month_list[month_choice]
+            day_limit = month_day_limit[month]
+            break
+                
+        
+        #Ensure the day not exceed the 31 day month limit
+        while True:
+
+            day = input("Enter the Day(eg. 1, 10, 25): ").strip()
+            if int(day) > day_limit:
+                print("Invalid day, Please Enter a day within 31")
+                continue
+
+            break
+        
+        self.due_date = datetime(int(year) if year.is_digit() else "Invalid Year Format", int(month_choice), day)
+        print(f"{self.task_name} due date is now set!: {self.due_date}")
+
 
 # FUNCTION SECTION:
 
