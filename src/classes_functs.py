@@ -1,3 +1,6 @@
+from datetime import datetime
+
+#CLASS FOR ACCOUNT
 class account:
     no_accounts = 0
     details_account = {"jerick": "jualo"}
@@ -17,6 +20,13 @@ class account:
     def display_accounts(self):
         return f"Account Details: {account.details_account}"
     
+ # CLASS FOR TASKS   
+
+    
+
+
+#FUNCTION SECTIONS
+
 
 def log_in():
 
@@ -79,7 +89,3 @@ def create_account():
         new_account = account(create_user, final_password)
         print(f"Account created successfully for {create_user}!")
         break
-    
-
-    
-  
