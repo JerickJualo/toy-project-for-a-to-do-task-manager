@@ -1,24 +1,74 @@
-from datetime import datetime
+from datetime import datetime 
 
 #CLASS FOR ACCOUNT
-class account:
+class Account:
+    
+    list_acc_id = []
+    all_acc = []
     no_accounts = 0
-    details_account = {"jerick": "jualo"}
+    details_account = {}
+        
     
     
     def __init__(self, username: str, password: str):
         key = username.lower()
         self.username = username
         self.password = password
-        account.no_accounts += 1
-        account.details_account[key] = password
+        
+        next_id = Account.list_acc_id[-1] + 1 if Account.list_acc_id else 1
+        self.acc_id = next_id
+        Account.list_acc_id.append(next_id)
+        Account.all_acc.append(self)
+        
+        Account.no_accounts += 1
+        Account.details_account[key] = password 
 
     def display_no_accounts(self):
-        return f"Total Number of Accounts: {account.no_accounts}"
+        return f"Total Number of Accounts: {Account.no_accounts}"
     
     
     def display_accounts(self):
-        return f"Account Details: {account.details_account}"
+        return f"Account Details: {Account.details_account}"
+
+    def view_acc_id(self):
+        return f"Account: {self.username} ID: {self.acc_id}"
+        
+    def __repr__(self):
+        return f"Account(Username: '{self.username}',Password: '{self.password}', Account ID: '{self.acc_id}')"
+    
+    @staticmethod
+    def create_account():
+
+        """
+    1. Loop until unique username + matching passwords
+    2. Instantiate new account(...)
+    3. Confirm creation, return to login flow
+    """
+
+        while True:
+            
+            print("Creating Account:")
+
+            create_user: str  = input("Enter the Username: ")
+    
+            # Check if the username already exists
+            if create_user in Account.details_account:
+                print("Username already exists. Please try a different username.")
+                continue
+            
+            first_password: str  = input("Enter the Password: ")
+            final_password: str  = input("Confirm the Password: ")
+            
+            if first_password != final_password:
+                print("Passwords do not match. Please try again.")
+                continue
+    
+            
+            new_account = Account(create_user, final_password)
+            print(f"Account created successfully for {create_user}!")
+            return new_account
+            break
+        
     
  # CLASS FOR TASKS   
 
@@ -42,8 +92,9 @@ def log_in():
     username: str = input("\nEnter your username: ").lower()
     password: str = input("Enter your password: ")
     
+    
 
-    if username.lower() in account.details_account:
+    if username.lower() in Account.details_account and Account.details_account[username.lower()] == password:
         print(f"\nWelcome back, {username.title()}!")
         return True
         
@@ -52,40 +103,14 @@ def log_in():
         print("User is not found.")
         confirm: str  = input("\nDo you want to create an account? (y/n): ").lower()
         if confirm == "y":
-            create_account()
+            Account.create_account()
         else:
             print("Exiting the program. Please run again with the correct username.")
             exit()
 
 
 
-def create_account():
 
-    """
-    1. Loop until unique username + matching passwords
-    2. Instantiate new account(...)
-    3. Confirm creation, return to login flow
-    """
 
-    while True:
-        
-        print("Creating Account:")
 
-        create_user: str  = input("Enter the Username: ")
 
-        # Check if the username already exists
-        if create_user in account.details_account:
-            print("Username already exists. Please try a different username.")
-            continue
-        
-        first_password: str  = input("Enter the Password: ")
-        final_password: str  = input("Confirm the Password: ")
-        
-        if first_password != final_password:
-            print("Passwords do not match. Please try again.")
-            continue
-
-        
-        new_account = account(create_user, final_password)
-        print(f"Account created successfully for {create_user}!")
-        break
