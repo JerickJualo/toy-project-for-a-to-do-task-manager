@@ -36,8 +36,8 @@ class Account:
     def __repr__(self):
         return f"Account(Username: '{self.username}',Password: '{self.password}', Account ID: '{self.acc_id}')"
     
-    @staticmethod
-    def create_account():
+    @classmethod
+    def create_account(cls):
 
         """
     1. Loop until unique username + matching passwords
@@ -63,14 +63,10 @@ class Account:
                 print("Passwords do not match. Please try again.")
                 continue
     
-            
-            new_account = Account(create_user, final_password)
             print(f"Account created successfully for {create_user}!")
-            return new_account
+            return cls(create_user, final_password)
             break
-        
-    
- # CLASS FOR TASKS   
+ # CLASS FOR TASKS
 
     
 
