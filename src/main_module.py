@@ -1,5 +1,5 @@
 from classes_functs import log_in
-from classes_functs import account
+from classes_functs import Account
 
 # Introduction
 
