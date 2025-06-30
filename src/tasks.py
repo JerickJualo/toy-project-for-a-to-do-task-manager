@@ -4,15 +4,39 @@ from datetime import datetime
 
 class Task:
 
-    statuses = ["Not Started", "In Progress", "Completed", "On Hold"]
+    statuses: list = ["Not Started", "In Progress", "Completed", "On Hold"]
+
+    #Task Class Attributes
+    ALL_TASKS: list = []
+    NO_TASKS: int = 0
+    LIST_TASK_ID: list[int] = []
 
     def __init__(self, task_name: str, description: str, status: str = "Not Started"):
+
+        #Task ID generation
+        next_id: int = Task.LIST_TASK_ID[-1] + 1 if Task.LIST_TASK_ID else 1
+        self.task_id: int = next_id
+
+        # Task details attributes
+        
         self.task_name = task_name
         self.description = description
         self.status = status
+        self.details = {}
+
+        #Task date attributes
         self.date_created = datetime.now()
         self.due_date = None
         self.day_created = None
+        
+
+        # Add the new task to the list of all tasks and update the task count
+        Task.ALL_TASKS.append(self)
+        Task.NO_TASKS += 1
+        Task.LIST_TASK_ID.append(self.task_id)
+        
+    def __repr__(self) -> str:
+        return f"Task(Task ID: '{self.task_id}', Task Name: '{self.task_name}',Description: '{self.description}')"
 
 
     def set_due_date(self):
@@ -71,6 +95,7 @@ class Task:
             while True:
 
                 day = input("Enter the Day(eg. 1, 10, 25): ").strip()
+
                 if int(day) > day_limit:
                     print("Invalid day, Please Enter a day within 31")
                     continue
@@ -79,6 +104,9 @@ class Task:
             
             self.due_date = datetime(int(year) if year.is_digit() else "Invalid Year Format", int(month_choice), day)
             print(f"{self.task_name} due date is now set!: {self.due_date}")
+
+            return self.due_date
+    
 
 
     @classmethod
@@ -115,6 +143,7 @@ class Task:
         new_task = cls(task_name, description, task_status)
 
         print(f"""Task '{new_task.task_name}' created successfully with status '{new_task.status}'!
+            Task_ID: {new_task.task_id}
             Description: {new_task.description}
             Date Created: {new_task.date_created.strftime('%Y-%m-%d %H:%M:%S')}
             Week Day Created: {new_task.date_created.strftime("%A")}""")
@@ -124,4 +153,3 @@ class Task:
         return new_task
     
 # FUNCTION SECTION:
-
