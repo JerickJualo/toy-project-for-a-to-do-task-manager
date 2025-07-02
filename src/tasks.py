@@ -40,6 +40,25 @@ class Task:
         
     def __repr__(self) -> str:
         return f"Task(Task ID: '{self.task_id}', Owner ID: '{self.owner_id}', Task Name: '{self.task_name}', Description: '{self.description}', Status: {self.status})"
+    
+    def __str__(self) -> str:
+        return f"""
+        ===========================
+        Task Information
+        ===========================
+        Task ID: {self.task_id}
+        Owner ID: {self.owner_id}
+        
+        ===========================
+        Task Details:
+        ===========================
+        Task Name: {self.task_name}
+        Description: {self.description}
+        Status: {self.status}
+        Date Created: {self.date_created}
+        Due Date: {self.due_date}
+        Day Created: {self.day_created}
+        """
 
 
     def set_due_date(self):

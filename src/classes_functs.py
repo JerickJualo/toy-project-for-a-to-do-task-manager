@@ -48,6 +48,19 @@ class Account:
 
     def view_acc_id(self) -> str:
         return f"Account: {self.username} ID: {self.acc_id}"
+    
+    
+    def full_acc_details(self) -> str:
+        print(f"Account Details for {self.username}:")
+        print(f"Username: {self.username}")
+        print(f"Account ID: {self.acc_id}")
+        print(f"Tasks: {self.tasks}")
+
+        for x in self.tasks.values():
+            print(x)
+        print("==========================")
+        return ""
+
         
     def __repr__(self) -> str:
         return f"Account(Username: '{self.username}',Password: '{self.password}', Account ID: '{self.acc_id}')"
@@ -150,8 +163,6 @@ class Account:
             print(f"Account created successfully for {create_user}!")
             return cls(create_user, final_password)
             break
-
-    
 
 
 #FUNCTION SECTIONS
