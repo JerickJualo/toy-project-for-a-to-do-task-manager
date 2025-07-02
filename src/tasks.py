@@ -11,7 +11,10 @@ class Task:
     NO_TASKS: int = 0
     LIST_TASK_ID: list[int] = []
 
-    def __init__(self, task_name: str, description: str, status: str = "Not Started"):
+    def __init__(self, task_name: str, description: str, status: str = "Not Started", owner_id: int = None):
+
+        # Owner ID 
+        self.owner_id = owner_id
 
         #Task ID generation
         next_id: int = Task.LIST_TASK_ID[-1] + 1 if Task.LIST_TASK_ID else 1
@@ -36,7 +39,7 @@ class Task:
         Task.LIST_TASK_ID.append(self.task_id)
         
     def __repr__(self) -> str:
-        return f"Task(Task ID: '{self.task_id}', Task Name: '{self.task_name}',Description: '{self.description}')"
+        return f"Task(Task ID: '{self.task_id}', Owner ID: '{self.owner_id}', Task Name: '{self.task_name}', Description: '{self.description}', Status: {self.status})"
 
 
     def set_due_date(self):
@@ -106,50 +109,3 @@ class Task:
             print(f"{self.task_name} due date is now set!: {self.due_date}")
 
             return self.due_date
-    
-
-
-    @classmethod
-    def create_task(cls):
-        print("Creating a new task:" )
-
-        # a dictionary for task status options
-        status = {"1": "Not Started",
-            "2": "In Progress",
-            "3": "Completed",
-            "4": "On Hold"
-        }
-
-        # Asking the task detials
-
-        task_name: str = input("Enter the task name: ")
-        description: str = input("Enter the task description: ")
-        status_choice: str = input("""Enter the task status: 
-                                (1: Not Started 
-                                2: In Progress
-                                3: Completed
-                                4: On Hold)
-                                : """)
-        
-        # Validate the status choice and set the task status
-        if status_choice in status:
-            task_status = status[status_choice]
-        else:
-            print("Invalid status choice. Defaulting to 'Not Started'.")
-            task_status = status["1"]
-
-        #Instantiate a new Task object
-
-        new_task = cls(task_name, description, task_status)
-
-        print(f"""Task '{new_task.task_name}' created successfully with status '{new_task.status}'!
-            Task_ID: {new_task.task_id}
-            Description: {new_task.description}
-            Date Created: {new_task.date_created.strftime('%Y-%m-%d %H:%M:%S')}
-            Week Day Created: {new_task.date_created.strftime("%A")}""")
-            
-        new_task.day_created = new_task.date_created.strftime("%A")
-
-        return new_task
-    
-# FUNCTION SECTION:

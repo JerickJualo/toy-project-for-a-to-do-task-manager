@@ -1,4 +1,5 @@
 from datetime import datetime 
+from tasks import Task
 
 #CLASS FOR ACCOUNT
 class Account:
@@ -7,7 +8,7 @@ class Account:
     LIST_ACC_ID: list[int] = []
     ALL_ACC: list[str] = []
     NO_ACCOUNTS: int = 0
-    DETAILS_ACCOUNT: dict; {str: str} = {}
+    DETAILS_ACCOUNT = {}
         
     
     def __init__(self, username: str, password: str):
@@ -19,7 +20,12 @@ class Account:
         
         next_id: int = Account.LIST_ACC_ID[-1] + 1 if Account.LIST_ACC_ID else 1
 
-        self.acc_id: int = next_id
+        self.acc_id: int = next_id # Owner ID on Task Class
+        
+        #Task related
+        
+        self.tasks = {}
+        
 
         #Actions to be executed for Class Attributes
         Account.LIST_ACC_ID.append(next_id)
@@ -42,6 +48,53 @@ class Account:
         
     def __repr__(self) -> str:
         return f"Account(Username: '{self.username}',Password: '{self.password}', Account ID: '{self.acc_id}')"
+
+        
+        
+    def create_task(self):
+        print("Creating a new task:" )
+
+        # a dictionary for task status options
+        status = {"1": "Not Started",
+            "2": "In Progress",
+            "3": "Completed",
+            "4": "On Hold"
+        }
+
+        # Asking the task detials
+
+        task_name: str = input("Enter the task name: ")
+        description: str = input("Enter the task description: ")
+        status_choice: str = input("""Enter the task status: 
+                                (1: Not Started 
+                                2: In Progress
+                                3: Completed
+                                4: On Hold)
+                                : """)
+        
+        # Validate the status choice and set the task status
+        if status_choice in status:
+            task_status = status[status_choice]
+        else:
+            print("Invalid status choice. Defaulting to 'Not Started'.")
+            task_status = status["1"]
+
+        #Instantiate a new Task object
+
+        new_task = Task(task_name, description, task_status, self.acc_id)
+        
+        self.tasks[new_task.task_id] = new_task
+
+        print(f"""Task '{new_task.task_name}' created successfully with status '{new_task.status}'!
+            Task_ID: {new_task.task_id}
+            Description: {new_task.description}
+            Date Created: {new_task.date_created.strftime('%Y-%m-%d %H:%M:%S')}
+            Week Day Created: {new_task.date_created.strftime("%A")}""")
+            
+        new_task.day_created = new_task.date_created.strftime("%A")
+        
+        return new_task
+
     
 
     
@@ -77,7 +130,6 @@ class Account:
             print(f"Account created successfully for {create_user}!")
             return cls(create_user, final_password)
             break
- # CLASS FOR TASKS
 
     
 
