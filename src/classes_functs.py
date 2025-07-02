@@ -179,15 +179,20 @@ def log_in():
     
     print("=======================================================================================================================================================")
     print("Log In:")
-    username: str = input("\nEnter your username: ").lower()
-    password: str = input("Enter your password: ")
+    log_username: str = input("\nEnter your username: ").lower()
+    log_password: str = input("Enter your password: ")
     
     
 
-    if username.lower() in Account.DETAILS_ACCOUNT and Account.DETAILS_ACCOUNT[username.lower()] == password:
-        print(f"\nWelcome back, {username.title()}!")
-        return True
-        
+    if log_username.lower() in Account.DETAILS_ACCOUNT and Account.DETAILS_ACCOUNT[log_username.lower()] == log_password:
+        print(f"\nWelcome back, {log_username.title()}!")
+        for acc in Account.ALL_ACC:
+            if acc.username == log_username:
+                global logged_acc
+                logged_acc = acc
+                break
+
+        return logged_acc
 
     else:
         print("User is not found.")

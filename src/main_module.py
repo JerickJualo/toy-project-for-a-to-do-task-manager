@@ -1,5 +1,6 @@
 from classes_functs import log_in
 from classes_functs import Account
+from menu import main_menu
 
 # Introduction
 
@@ -17,8 +18,28 @@ print("=========================================================================
 
 
 # Ensure the user is logged in before proceeding 
-while not log_in():
-        pass
+
+logged_acc = None
+# Loop until the user successfully logs in
+while not logged_acc:
+    logged_acc = log_in()
+
+main_menu(logged_acc)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 print("\n=======================================================================================================================================================")
 print(f"Here's Jerick's Goals for this Summer Vacation")
