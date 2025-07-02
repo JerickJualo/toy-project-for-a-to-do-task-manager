@@ -36,6 +36,9 @@ class Account:
 
 
     # Instance Methods
+
+    #Account Details Display Methods
+
     def display_NO_ACCOUNTS(self) -> str:
         return f"Total Number of Accounts: {Account.NO_ACCOUNTS}"
     
@@ -48,6 +51,23 @@ class Account:
         
     def __repr__(self) -> str:
         return f"Account(Username: '{self.username}',Password: '{self.password}', Account ID: '{self.acc_id}')"
+    
+    # Task Related Methods
+
+    def view_tasks(self):
+        """
+        1. Display all tasks for the account.
+        2. If no tasks exist, inform the user.
+        3. If tasks exist, display each task's details.
+        """
+        
+        if not self.tasks:
+            print("No tasks available for this account.")
+            return
+        
+        print(f"Tasks for Account '{self.username}':")
+        for task_id, task in self.tasks.items():
+            print(f"Task ID: {task_id}, Name: {task.task_name}, Status: {task.status}, Date Created: {task.date_created.strftime('%Y-%m-%d %H:%M:%S')}")
 
         
         
