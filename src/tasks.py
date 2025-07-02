@@ -48,7 +48,7 @@ class Task:
         ===========================
         Task ID: {self.task_id}
         Owner ID: {self.owner_id}
-        
+
         ===========================
         Task Details:
         ===========================
@@ -128,3 +128,73 @@ class Task:
             print(f"{self.task_name} due date is now set!: {self.due_date}")
 
             return self.due_date
+    
+
+
+
+
+    def rename(self, new_task_name: str):
+        """
+        Change the name of the task.
+        """
+
+        if not new_task_name:
+            print("Task name cannot be empty. Please provide a valid name.")
+            return None
+
+        confirmation = input(f"Are you sure you want to change the task name from {self.task_name} to {new_task_name}? (yes/no): ").strip().lower()
+
+        if confirmation == "yes":
+
+            self.task_name = new_task_name
+            print(f"Task name changed to: {self.task_name}")
+            return self.task_name
+        
+        else:
+            print("Change Task Name Cancelled")
+            return None
+    
+
+
+
+    
+    def change_description(self, new_description: str):
+        """
+        Change the description of the task.
+        """
+
+        if not new_description:
+            print("Description cannot be empty. Please provide a valid description.")
+            return None
+        
+        confirmation = input(f"Are you sure you want to change the description of {self.task_name} to '{new_description}'? (yes/no): ").strip().lower()
+
+        if confirmation == "yes":
+
+            self.description = new_description
+            print(f"Task description changed to: {self.description}")
+            return self.description
+        
+        else:
+            print("Change Description Cancelled")
+
+            return None
+
+
+
+
+    def change_status(self, new_status: str):
+
+        if new_status not in Task.statuses:
+            print(f"Invalid status. Please choose from: {', '.join(Task.statuses)}")
+            return None
+        
+        confirmation = input(f"Are you sure you want to change the status of {self.task_name} to {new_status}? (yes/no): ").strip().lower()
+        
+        if confirmation == 'yes':
+            self.status = new_status
+            print(f"Status of {self.task_name} changed to: {self.status}")
+            return self.status
+        else:
+            print("Status change cancelled.")
+            return None

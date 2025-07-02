@@ -1,6 +1,6 @@
 from classes_functs import log_in
 from classes_functs import Account
-from menu import main_menu
+from menu import super_menu
 
 # Introduction
 
@@ -24,7 +24,7 @@ logged_acc = None
 while not logged_acc:
     logged_acc = log_in()
 
-main_menu(logged_acc)
+super_menu(logged_acc)
 
 
 
