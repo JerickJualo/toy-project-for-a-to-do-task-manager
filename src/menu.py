@@ -23,8 +23,9 @@ def super_menu(logged_acc):
             print(logged_acc.view_tasks())
 
             edit_id = input("\nEnter the Task ID you want to edit:").strip()
-            if edit_id in logged_acc.tasks:
-                logged_acc.edit_task(logged_acc, edit_id)
+
+            if int(edit_id) in logged_acc.tasks:
+                edit_task(logged_acc, int(edit_id))
             else:
                 print("Task ID not found.")
         
@@ -54,6 +55,7 @@ def edit_task(logged_acc, task_id):
     print("1. Change Task Name")
     print("2. Change Task Description")
     print("3. Change Task Status")
+    print("4. Change Task Due Date")
 
     edit_choice = input("Enter your choice (1-3): ").strip()
 
@@ -68,6 +70,10 @@ def edit_task(logged_acc, task_id):
     elif edit_choice == "3":
         new_status = input(f"Enter the new status for the task (current: {task.status}): ").strip()
         task.change_status(new_status)
+
+    elif edit_choice == "4":
+
+        task.change_due_date()
 
     else:
         print("Invalid choice. Please try again.")
