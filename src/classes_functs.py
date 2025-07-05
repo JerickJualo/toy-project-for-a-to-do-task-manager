@@ -51,14 +51,15 @@ class Account:
     
     
     def full_acc_details(self) -> str:
+        print("==========================")
         print(f"Account Details for {self.username}:")
         print(f"Username: {self.username}")
         print(f"Account ID: {self.acc_id}")
-        print(f"Tasks: {self.tasks}")
+        print("========================================================================================================================================================")
 
         for x in self.tasks.values():
             print(x)
-        print("==========================")
+        print("========================================================================================================================================================")
         return ""
 
         
@@ -77,15 +78,17 @@ class Account:
         if not self.tasks:
             print("No tasks available for this account.")
             return
-        
+        print("========================================================================================================================================================")
         print(f"Tasks for Account '{self.username}':")
+        print("========================================================================================================================================================")
         for task_id, task in self.tasks.items():
-            print(f"Task ID: {task_id}, Name: {task.task_name}, Status: {task.status}, Date Created: {task.date_created.strftime('%Y-%m-%d %H:%M:%S')}")
+            print(f"Task ID: {task_id}, Name: {task.task_name}, Status: {task.status}, Date Created: {task.date_created.strftime('%Y-%m-%d %H:%M:%S')} , Due Date: {task.due_date.strftime('%Y-%m-%d') if task.due_date else 'No due date set'}")
 
-        
-        
+        print("========================================================================================================================================================")
+
     def create_task(self):
-        print("Creating a new task:" )
+        print("\n========================================================================================================================================================")
+        print("Creating a new task:\n" )
 
         # a dictionary for task status options
         status = {"1": "Not Started",
@@ -107,6 +110,7 @@ class Account:
         
         # Validate the status choice and set the task status
         if status_choice in status:
+            print("========================================================================================================================================================")
             task_status = status[status_choice]
         else:
             print("Invalid status choice. Defaulting to 'Not Started'.")
@@ -128,7 +132,36 @@ class Account:
         
         return new_task
 
-    
+    def delete_task(self, task_id: int):
+        """
+        1. Check if the task exists in the account's tasks.
+        2. If it exists, delete the task and inform the user.
+        3. If it doesn't exist, inform the user.
+        """
+        
+        if task_id in self.tasks:
+            confirm = input("Do you really want to delete this task? (yes/no): ").strip().lower()
+
+            if confirm == "yes":
+                task = self.tasks.pop(task_id)
+
+                if task in Task.ALL_TASKS:
+                    Task.ALL_TASKS.remove(task)
+                if task_id in Task.LIST_TASK_ID:
+                    Task.LIST_TASK_ID.remove(task_id)
+                Task.NO_TASKS -= 1
+
+                if Task.NO_TASKS > 0:
+                    Task.NO_TASKS -= 1
+                
+                print(f"Task with ID {task_id} has been deleted.")
+
+                return True
+            
+            else:
+                print("Task deletion cancelled.")
+        else:
+            print(f"Task with ID {task_id} does not exist in this account.")
 
     
     #Class Methods
@@ -164,6 +197,33 @@ class Account:
             return cls(create_user, final_password)
             break
 
+    def to_dict(self) -> dict:
+        return {
+            "acc_id":   self.acc_id,
+            "username": self.username,
+            "password": self.password,
+            "task_ids": list(self.tasks.keys()),
+        }
+
+    @classmethod
+    def from_dict(cls, data: dict):
+        # 1) Create a bare instance without calling __init__
+        acct = cls.__new__(cls)
+
+        # 2) Manually set instance attributes
+        acct.username = data["username"]
+        acct.password = data["password"]
+        acct.acc_id   = data["acc_id"]
+        acct.tasks    = {}           # start empty; load_data() will fill this in
+
+        # 3) Update class‑level registries exactly once
+        Account.LIST_ACC_ID.append(acct.acc_id)
+        Account.ALL_ACC.append(acct)
+        Account.NO_ACCOUNTS += 1
+        Account.DETAILS_ACCOUNT[acct.username.lower()] = acct.password
+
+        return acct
+
 
 #FUNCTION SECTIONS
 
@@ -181,11 +241,11 @@ def log_in():
     print("Log In:")
     log_username: str = input("\nEnter your username: ").lower()
     log_password: str = input("Enter your password: ")
+    print("=======================================================================================================================================================")
     
     
 
     if log_username.lower() in Account.DETAILS_ACCOUNT and Account.DETAILS_ACCOUNT[log_username.lower()] == log_password:
-        print(f"\nWelcome back, {log_username.title()}!")
         for acc in Account.ALL_ACC:
             if acc.username == log_username:
                 global logged_acc

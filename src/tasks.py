@@ -198,6 +198,10 @@ class Task:
 
     def change_status(self, new_status: str):
 
+        """
+        Change the status of the task.
+        """
+
         if new_status not in Task.statuses:
             print(f"Invalid status. Please choose from: {', '.join(Task.statuses)}")
             return None
@@ -229,3 +233,38 @@ class Task:
         else:
             print("Change Due Date Cancelled")
             return None
+        
+    # METHODS FOR SERIALIZATION
+    
+    def to_dict(self) -> dict:
+        return {
+            "task_id":      self.task_id,
+            "owner_id":     self.owner_id,
+            "task_name":    self.task_name,
+            "description":  self.description,
+            "status":       self.status,
+            "date_created": self.date_created.isoformat(),
+            "due_date":     self.due_date.isoformat() if self.due_date else None,
+            "day_created":  self.day_created,
+        }
+
+    @classmethod
+    def from_dict(cls, data: dict):
+        
+        task = cls(
+            data["task_name"],
+            data["description"],
+            data["status"],
+            data["owner_id"],
+        )
+       
+        task.task_id      = data["task_id"]
+        task.date_created = datetime.fromisoformat(data["date_created"])
+        task.due_date     = datetime.fromisoformat(data["due_date"]) if data["due_date"] else None
+        task.day_created  = data["day_created"]
+        
+
+        Task.LIST_TASK_ID.append(task.task_id)
+        Task.ALL_TASKS.append(task)
+        Task.NO_TASKS += 1
+        return task

@@ -1,5 +1,5 @@
-from classes_functs import log_in
-from classes_functs import Account
+from persistence import load_data, save_data
+from classes_functs import log_in, Account
 from menu import super_menu
 
 # Introduction
@@ -19,15 +19,20 @@ print("=========================================================================
 
 # Ensure the user is logged in before proceeding 
 
-logged_acc = None
-# Loop until the user successfully logs in
-while not logged_acc:
-    logged_acc = log_in()
 
-super_menu(logged_acc)
+def main():
+    load_data()
+    try:
+        print("Welcome to To‑Do Task Manager…")
+        logged_acc = None
+        while not logged_acc:
+            logged_acc = log_in()
+        super_menu(logged_acc)
+    finally:
+        save_data()
 
-
-
+if __name__ == "__main__":
+    main()
 
 
 
