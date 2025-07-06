@@ -21,28 +21,38 @@ print("=========================================================================
 
 
 def main():
+    """
+    Entry point for the To‑Do Task Manager application.
+
+    Workflow:
+      1. load_data(): Rebuild in-memory Account and Task objects from disk.
+      2. Prompt the user to log in or create an account.
+      3. Once authenticated, enter the interactive super_menu loop.
+      4. On exit (user logs out or an unexpected error occurs), save_data() is
+         always called to persist the current state to disk.
+
+    This ensures that no matter how the program terminates, all changes
+    made during the session are written back to 'data.json'.
+    """
+    
     load_data()
     try:
         print("Welcome to To‑Do Task Manager…")
         logged_acc = None
+
+        # Keep prompting until a valid Account is returned
         while not logged_acc:
             logged_acc = log_in()
+
+        # Launch the main interactive menu for the authenticated user
         super_menu(logged_acc)
     finally:
+        # Always persist data even on unexpected exit
         save_data()
 
 if __name__ == "__main__":
+    # Only run the application loop if this script is executed directly
     main()
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -4,6 +4,12 @@ from datetime import datetime
 
 class Task:
 
+    """
+    Represents a single to-do task with an owner, description, status, and scheduling attributes.
+    Tracks all tasks globally and supports operations for updating and serializing.
+    """
+
+    # Allowed statuses for any task
     statuses: list = ["Not Started", "In Progress", "Completed", "On Hold"]
 
     #Task Class Attributes
@@ -12,6 +18,16 @@ class Task:
     LIST_TASK_ID: list[int] = []
 
     def __init__(self, task_name: str, description: str, status: str = "Not Started", owner_id: int = None):
+
+        """
+        Initialize a new Task instance.
+
+        Args:
+            task_name (str): Short title of the task.
+            description (str): Detailed description of the task.
+            status (str): Current status; must be one of Task.statuses.
+            owner_id (int): Identifier of the owning Account.
+        """
 
         # Owner ID 
         self.owner_id = owner_id
@@ -37,11 +53,23 @@ class Task:
         Task.ALL_TASKS.append(self)
         Task.NO_TASKS += 1
         Task.LIST_TASK_ID.append(self.task_id)
+
         
     def __repr__(self) -> str:
+
+        """
+        Return a concise developer-facing representation of the Task.
+        """
+
         return f"Task(Task ID: '{self.task_id}', Owner ID: '{self.owner_id}', Task Name: '{self.task_name}', Description: '{self.description}', Status: {self.status})"
     
     def __str__(self) -> str:
+
+        """
+        Return a human-friendly, multi-line description of the Task, including
+        scheduling and status information.
+        """
+
         return f"""
         ===========================
         Task Information
@@ -148,7 +176,13 @@ class Task:
 
     def rename(self, new_task_name: str):
         """
-        Change the name of the task.
+        Change the task's name after user confirmation.
+
+        Args:
+            new_task_name (str): The proposed new name for the task.
+
+        Returns:
+            str or None: The updated name if changed; None if cancelled or invalid.
         """
 
         if not new_task_name:
@@ -173,7 +207,13 @@ class Task:
     
     def change_description(self, new_description: str):
         """
-        Change the description of the task.
+        Change the task's description after user confirmation.
+
+        Args:
+            new_description (str): The new description text.
+
+        Returns:
+            str or None: The updated description if changed; None if cancelled or invalid.
         """
 
         if not new_description:
@@ -199,7 +239,14 @@ class Task:
     def change_status(self, new_status: str):
 
         """
-        Change the status of the task.
+        Update the task's status, ensuring it matches one of the allowed
+        statuses, and confirm before applying.
+
+        Args:
+            new_status (str): The new status value.
+
+        Returns:
+            str or None: The updated status if changed; None if cancelled or invalid.
         """
 
         if new_status not in Task.statuses:
@@ -218,7 +265,11 @@ class Task:
         
     def change_due_date(self):
         """
-        Change the due date of the task.
+        Wrapper around set_due_date() that asks for user confirmation to
+        overwrite the existing due date.
+
+        Returns:
+            datetime or None: The updated due_date if changed; None if cancelled.
         """
 
         new_due_date = self.set_due_date()
@@ -237,6 +288,13 @@ class Task:
     # METHODS FOR SERIALIZATION
     
     def to_dict(self) -> dict:
+        """
+        Serialize this Task to a JSON-serializable dictionary.
+
+        Returns:
+            dict: A mapping of task attributes to basic Python types.
+        """
+
         return {
             "task_id":      self.task_id,
             "owner_id":     self.owner_id,
@@ -250,6 +308,16 @@ class Task:
 
     @classmethod
     def from_dict(cls, data: dict):
+        """
+        Re-hydrate a Task instance from its dictionary form, restoring
+        all attributes and updating class-level registries.
+
+        Args:
+            data (dict): The serialized task dictionary.
+
+        Returns:
+            Task: The reconstructed Task object.
+        """
         
         task = cls(
             data["task_name"],

@@ -1,13 +1,39 @@
-# persistence.py
+"""
+persistence.py
+
+Handles saving and loading persistent data for the To-Do Task Manager.
+This module ensures all user accounts and their tasks are written to and read from disk,
+allowing the application to retain state across sessions.
+
+Data is serialized to JSON and stored in 'data.json'. The structure includes:
+- A list of serialized account dictionaries.
+- A list of serialized task dictionaries.
+"""
+
 import json
 from pathlib import Path
 from classes_functs import Account
 from tasks import Task
 
+# Path to the JSON file where data is persisted
 DATA_FILE = Path("data.json")
 
 def save_data():
-    """Serialize all accounts & tasks to disk atomically."""
+    """
+    Save all accounts and tasks to a JSON file atomically.
+
+    This function serializes all current instances of Account and Task
+    into a structured JSON object and writes it to 'data.json'.
+    A temporary file is written first and then renamed to avoid data loss
+    in case of an interruption.
+
+    Structure:
+    {
+        "accounts": [...],
+        "tasks": [...]
+    }"""
+
+
     payload = {
         "accounts": [acct.to_dict() for acct in Account.ALL_ACC],
         "tasks":    [task.to_dict() for task in Task.ALL_TASKS],
@@ -20,7 +46,16 @@ def save_data():
 
 
 def load_data():
-    """Load accounts & tasks from disk (if present)."""
+    """
+    Load all accounts and tasks from the JSON file (if it exists).
+
+    This function attempts to read 'data.json' and deserialize its contents
+    into Account and Task objects. If the file is missing or empty, nothing
+    is loaded. If the file is malformed, a warning is printed and loading is skipped.
+
+    Reconstructed accounts are added to the Account registries.
+    Tasks are reconstructed and also attached to their respective owner accounts.
+    """
     if not DATA_FILE.exists():
         return
     

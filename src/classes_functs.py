@@ -3,15 +3,41 @@ from tasks import Task
 
 #CLASS FOR ACCOUNT
 class Account:
+
+    """
+    Represents a user account in the To-Do Task Manager, handling authentication
+    and providing a namespace for that user's tasks.
+
+    Attributes:
+        username (str): The account's login name.
+        password (str): The account's password (plaintext; consider hashing for real apps).
+        acc_id (int): Unique identifier for this account.
+        tasks (dict[int, Task]): Tasks owned by this account, keyed by task_id.
+
+    Class Attributes:
+        LIST_ACC_ID (list[int]): All assigned account IDs.
+        ALL_ACC (list[Account]): All Account instances created.
+        NO_ACCOUNTS (int): Total number of accounts.
+        DETAILS_ACCOUNT (dict[str, str]): Mapping of lowercase username -> password for login.
+    """
     
     # Class Attributes
     LIST_ACC_ID: list[int] = []
     ALL_ACC: list[str] = []
     NO_ACCOUNTS: int = 0
     DETAILS_ACCOUNT = {}
+
+
         
     
     def __init__(self, username: str, password: str):
+        """
+        Initialize a new Account, assign a unique acc_id, and register in class-level stores.
+
+        Args:
+            username (str): Desired username (must be unique).
+            password (str): Password for the account.
+        """
 
         # Username, Password, Account ID
         key = username.lower()
@@ -40,17 +66,45 @@ class Account:
     #Account Details Display Methods
 
     def display_NO_ACCOUNTS(self) -> str:
+        """
+        Return a string showing the total number of accounts.
+
+        Returns:
+            str: e.g. "Total Number of Accounts: 5".
+        """
         return f"Total Number of Accounts: {Account.NO_ACCOUNTS}"
     
     
     def display_accounts(self) -> str:
+        """
+        Return a summary of all registered accounts and their passwords.
+
+        Returns:
+            str: e.g. "Account Details: {'alice': 'pass123', 'bob': 'xYz'}".
+        """
         return f"Account Details: {Account.DETAILS_ACCOUNT}"
 
     def view_acc_id(self) -> str:
+        """
+        Display this account's username and ID.
+
+        Returns:
+            str: e.g. "Account: alice ID: 1".
+        """
         return f"Account: {self.username} ID: {self.acc_id}"
     
     
     def full_acc_details(self) -> str:
+        """
+        Print and return a detailed summary of this account and its tasks.
+
+        Side Effects:
+            Prints account info and each task's __repr__ to stdout.
+
+        Returns:
+            str: Empty string for chaining with print().
+        """
+
         print("==========================")
         print(f"Account Details for {self.username}:")
         print(f"Username: {self.username}")
@@ -64,8 +118,13 @@ class Account:
 
         
     def __repr__(self) -> str:
+        """
+        Developer-facing representation of the account.
+        """
         return f"Account(Username: '{self.username}',Password: '{self.password}', Account ID: '{self.acc_id}')"
     
+
+
     # Task Related Methods
 
     def view_tasks(self):
@@ -73,6 +132,9 @@ class Account:
         1. Display all tasks for the account.
         2. If no tasks exist, inform the user.
         3. If tasks exist, display each task's details.
+
+        Side Effects:
+            Prints each task's ID, name, status, date created, and due date.
         """
         
         if not self.tasks:
@@ -86,7 +148,16 @@ class Account:
 
         print("========================================================================================================================================================")
 
+
+
     def create_task(self):
+        """
+        Interactively create a new Task, register it with this account, and return it.
+
+        Returns:
+            Task: The newly created Task instance.
+        """
+
         print("\n========================================================================================================================================================")
         print("Creating a new task:\n" )
 
@@ -131,12 +202,23 @@ class Account:
         new_task.day_created = new_task.date_created.strftime("%A")
         
         return new_task
+    
+
+
 
     def delete_task(self, task_id: int):
+
         """
-        1. Check if the task exists in the account's tasks.
-        2. If it exists, delete the task and inform the user.
-        3. If it doesn't exist, inform the user.
+        Remove a Task by its ID after user confirmation.
+
+        Args:
+            task_id (int): Identifier of the task to delete.
+
+        Returns:
+            bool: True if deleted, False otherwise.
+
+        Side Effects:
+            Updates both self.tasks and global Task registries.
         """
         
         if task_id in self.tasks:
@@ -170,10 +252,12 @@ class Account:
     def create_account(cls):
 
         """
-    1. Loop until unique username + matching passwords
-    2. Instantiate new account(...)
-    3. Confirm creation, return to login flow
-    """
+        Interactively prompt for a unique username and matching password to
+        register a new Account.
+
+        Returns:
+            Account: The newly created account.
+        """
 
         while True:
             
@@ -197,7 +281,16 @@ class Account:
             return cls(create_user, final_password)
             break
 
+
+
     def to_dict(self) -> dict:
+        """
+        Serialize this Account's core data into a JSON-serializable dict.
+
+        Returns:
+            dict: Contains 'acc_id', 'username', 'password', and 'task_ids'.
+        """
+
         return {
             "acc_id":   self.acc_id,
             "username": self.username,
@@ -207,16 +300,24 @@ class Account:
 
     @classmethod
     def from_dict(cls, data: dict):
-        # 1) Create a bare instance without calling __init__
+        """
+        Reconstruct an Account from its serialized dict, updating class registries.
+
+        Args:
+            data (dict): Serialized account data.
+
+        Returns:
+            Account: The re-hydrated account instance.
+        """
         acct = cls.__new__(cls)
 
         # 2) Manually set instance attributes
         acct.username = data["username"]
         acct.password = data["password"]
         acct.acc_id   = data["acc_id"]
-        acct.tasks    = {}           # start empty; load_data() will fill this in
+        acct.tasks    = {}           
 
-        # 3) Update class‑level registries exactly once
+        
         Account.LIST_ACC_ID.append(acct.acc_id)
         Account.ALL_ACC.append(acct)
         Account.NO_ACCOUNTS += 1
@@ -231,10 +332,14 @@ class Account:
 def log_in():
 
     """
-    1. Prompt for username/password
-    2. Check against account.DETAILS_ACCOUNT
-    3. On success: greet & return True
-    4. On failure: call create_account() or exit
+    Prompt the user for login credentials, authenticate, and return the Account.
+
+    Returns:
+        Account: Logged-in account instance.
+
+    Side Effects:
+        - Calls create_account() on failure if user opts in.
+        - Exits program on cancellation.
     """
     
     print("=======================================================================================================================================================")
